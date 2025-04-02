@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                // "${workspaceFolder}/**",
+                "/opt/ros/humble/include/",
+                "/home/ubuntu/ros2_ws/install/**",
+                "/home/ubuntu/ros2_ws/build/**",
+                // "/usr/include/**"
+                "/home/ubuntu/ros2_ws/src/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
