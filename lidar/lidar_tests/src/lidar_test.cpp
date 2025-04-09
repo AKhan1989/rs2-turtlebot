@@ -19,8 +19,9 @@ public:
 
 private:
     void lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
-        int front_index = msg->ranges.size() / 2;  // Middle index represents the front (0°) - however i keep getting the back...so the below line.
-        float lidar_distance = msg->ranges[front_index];
+        // int front_index = msg->ranges.size() / 2;  // Middle index represents the front (0°)
+        int front_index = 0;    // Hard code it as 0 or 360 for the front lidar reading
+        float lidar_distance = msg->ranges[front_index] - 0.150;    // Calibrate it 150mm is camera sensor to the front of the turtlebot
         
         // float middle_angle = msg->angle_min + (msg->angle_max - msg->angle_min) / 2;
         // int front_index = static_cast<int>((middle_angle - msg->angle_min) / msg->angle_increment);
