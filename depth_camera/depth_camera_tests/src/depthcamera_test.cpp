@@ -1,12 +1,21 @@
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/point_cloud2.hpp"
 #include "sensor_msgs/point_cloud2_iterator.hpp"
+#include "rclcpp/qos.hpp"   // added this to modify subscriber to ensure we can listen to topic - atm it's not compatible
 
 class DepthCameraTest : public rclcpp::Node {
 public:
     DepthCameraTest() : Node("depth_camera_test") {
+        // subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
+        //     "/camera/depth/color/points", 10,
+        //     std::bind(&DepthCameraTest::pointcloud_callback, this, std::placeholders::_1));
+        // Define QoS profile compatible with depth camera publisher
+        rclcpp::QoS qos_profile = rclcpp::QoS(rclcpp::KeepLast(10))
+                                    .reliability(rclcpp::ReliabilityPolicy::BestEffort)
+                                    .durability(rclcpp::DurabilityPolicy::Volatile);
+
         subscription_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-            "/camera/depth/color/points", 10,
+            "/camera/depth/color/points", qos_profile,
             std::bind(&DepthCameraTest::pointcloud_callback, this, std::placeholders::_1));
     }
 
@@ -15,14 +24,14 @@ private:
         int width = msg->width;
         int height = msg->height;
         
-        int center_x = width / 2;
-        int center_y = height / 2;
+        int centre_x = width / 2;
+        int centre_y = height / 2;
 
         sensor_msgs::PointCloud2ConstIterator<float> iter_x(*msg, "x");
         sensor_msgs::PointCloud2ConstIterator<float> iter_y(*msg, "y");
         sensor_msgs::PointCloud2ConstIterator<float> iter_z(*msg, "z");
 
-        int index = center_y * width + center_x;
+        int index = centre_y * width + centre_x;
         float depth = iter_z[index];  // Extract Z (depth) value
 
         RCLCPP_INFO(this->get_logger(), "Depth at center pixel: %.3f m", depth);
