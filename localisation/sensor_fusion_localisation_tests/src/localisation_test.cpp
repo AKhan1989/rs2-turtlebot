@@ -3,6 +3,9 @@
 #include "nav_msgs/msg/odometry.hpp"
 #include "sensor_msgs/msg/laser_scan.hpp"
 #include "sensor_msgs/msg/image.hpp"
+#include "geometry_msgs/msg/pose_stamped.hpp"
+#include <algorithm>
+#include <memory>
 
 class SensorFusionNode : public rclcpp::Node {
 public:
@@ -12,6 +15,7 @@ public:
                                     .reliability(rclcpp::ReliabilityPolicy::BestEffort)
                                     .durability(rclcpp::DurabilityPolicy::Volatile);
 
+        // Subscribers
         // Use default QoS for odometry (usually reliable)
         odom_subscriber_ = this->create_subscription<nav_msgs::msg::Odometry>(
             "/odom", 10,
@@ -28,11 +32,20 @@ public:
             std::bind(&SensorFusionNode::lidar_callback, this, std::placeholders::_1)
         );
 
-        depth_camera_subscriber_ = this->create_subscription<sensor_msgs::msg::Image>(
-            "/camera/depth/image_raw/compressed", sensor_qos,
-            std::bind(&SensorFusionNode::depth_camera_callback, this, std::placeholders::_1)
-        );
+        // depth_camera_subscriber_ = this->create_subscription<sensor_msgs::msg::Image>(
+        //     "/camera/depth/image_raw/compressed", sensor_qos,
+        //     std::bind(&SensorFusionNode::depth_camera_callback, this, std::placeholders::_1)
+        // );
 
+        // Publishers
+        fused_pose_pub_ = this->create_publisher<geometry_msgs::msg::PoseStamped>(
+            "/fused_pose", 10);
+        
+        fusion_timer_ = this->create_wall_timer(
+            std::chrono::milliseconds(100),
+            std::bind(&SensorFusionNode::fuse_and_publish, this)
+        );
+        
         RCLCPP_INFO(this->get_logger(), "Sensor Fusion Node Started");
     }
 
@@ -54,27 +67,31 @@ private:
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr fused_pose_pub_;
 
     // time
-    rclcpp::TimerBase:SharedPtr fusion_timer_;
+    rclcpp::TimerBase::SharedPtr fusion_timer_;
 
     // callbacks
     void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg) {
         RCLCPP_INFO(this->get_logger(), "Received odometry data");
-        // TODO: Store/process odometry
+        // Store/process odometry
+        latest_odom_ = msg;
     }
 
     void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg) {
         RCLCPP_INFO(this->get_logger(), "Received IMU data");
-        // TODO: Store/process IMU
+        // Store/process IMU
+        latest_imu_ = msg;
     }
 
     void lidar_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg) {
         RCLCPP_INFO(this->get_logger(), "Received lidar scan");
-        // TODO: Use for obstacle detection / matching
+        // Use for obstacle detection / matching
+        latest_lidar_ = msg;
     }
 
     // void depth_camera_callback(const sensor_msgs::msg::Image::SharedPtr msg) {
     //     RCLCPP_INFO(this->get_logger(), "Received depth image");
     //     // TODO: Could process pointclouds later
+    //     latest_depth_image_ = msg;
     // }
 
     // rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_subscriber_;
@@ -84,7 +101,7 @@ private:
 
     // sensor fusion for localisation
     void fuse_and_publish() {
-        if (!latest_odom_ || !latest_imu) {
+        if (!latest_odom_ || !latest_imu_) {
             RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 2000, "Waiting for both odometry and IMU...");
             return;
         }
