@@ -10,6 +10,12 @@ find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
+add_executable(depth_camera_tests src/depthcamera_test.cpp)
+ament_target_dependencies(depth_camera_tests rclcpp sensor_msgs)
+install(TARGETS depth_camera_tests DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
