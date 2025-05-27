@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>launch_sensor_fusion_slam</name>
+  <version>0.0.1</version>
+  <description>Launch file and nodes for sensor fusion and SLAM.</description>
+  <maintainer email="akhancats16@gmail.com">Areebah Khan</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Dependencies -->
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>nav_msgs</depend>
+
+  <!-- Launch & visualization -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>slam_toolbox</exec_depend>
+</package>
