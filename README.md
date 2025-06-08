@@ -2,19 +2,19 @@
 This git repo holds all the files and folders for Subsystem 2 - Sensors and Control for Localisation and Mapping
 
 ## Unit and Integration Tests this repository holds
-1	Unit Test – LiDAR Reading Raw Data Accuracy
+###1	Unit Test – LiDAR Reading Raw Data Accuracy
   - Ensure correct raw LiDAR data readings for obstacle detection and localisation
   - **lidar/lidar_tests**
-2	Integration Test – Sensor Data Fusion for Localisation
+### 2	Integration Test – Sensor Data Fusion for Localisation
   - Use LiDAR and Depth Camera to improve localisation accuracy
   - **localisation/sensor_fusion_localisation_tests**
-3	Unit Test – RGB Colour Perception Test
+### 3	Unit Test – RGB Colour Perception Test
   - Test whether the Turtlebot3 can scan an object and detect its colour effectively to help with package detection in Subsystem 4
   - **rgb_camera_detect**
-4	Integration Test – Real Time Obstacle Detection and Mapping
+### 4	Integration Test – Real Time Obstacle Detection and Mapping
   - Test obstacle-aware SLAM and safety feedback in real time
   - **launch_sensor_fusion_slam**
-5	Integration Test – Warehouse Map Consistency
+### 5	Integration Test – Warehouse Map Consistency
   - Test whether the SLAM-generated map is stable and accurate for navigation
   - same as fourth test - **launch_sensor_fusion_slam**
 
