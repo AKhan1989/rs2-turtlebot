@@ -2,7 +2,7 @@
 This git repo holds all the files and folders for Subsystem 2 - Sensors and Control for Localisation and Mapping
 
 ## Unit and Integration Tests this repository holds
-###1	Unit Test – LiDAR Reading Raw Data Accuracy
+### 1	Unit Test – LiDAR Reading Raw Data Accuracy
   - Ensure correct raw LiDAR data readings for obstacle detection and localisation
   - **lidar/lidar_tests**
 ### 2	Integration Test – Sensor Data Fusion for Localisation
@@ -25,21 +25,23 @@ Attempted to use the **rs2-turtlebot/launch_sensor_fusion_slam/launch/full_syste
 3. Setup ros2_ws
 4. Git clone repository to device and symlink to the ros2_ws
 5. Run RViz2:
-      Add Image to the Displays panel
-      Open RViz2 with the /camera/image_raw/compressed topic
-      Ensure that under global options that the fixed base is “base_link”
-      Add Map to the Displays panel
-      Ensure topic goes to the one you created (for me I did /map)
-      Under the LaserScan in the Displays panel ensure:
-         Topic: /scan
-         History Policy: Keep Last
-         Reliability Policy: Best Effort
-         Durability Policy: Volatile
-      Ensure map type is an Occupancy Grid
+      Add Image to the Displays panel <br/>
+      Open RViz2 with the /camera/image_raw/compressed topic <br/>
+      Ensure that under global options that the fixed base is “base_link” <br/>
+      Add Map to the Displays panel <br/>
+      Ensure topic goes to the one you created (for me I did /map) <br/>
+      Under the LaserScan in the Displays panel ensure: <br/>
+         Topic: /scan <br/>
+         History Policy: Keep Last <br/>
+         Reliability Policy: Best Effort <br/>
+         Durability Policy: Volatile <br/>
+      Ensure map type is an Occupancy Grid <br/>
 7. In terminal enter:
+      ```
       cd ros2_ws/
       colcon build --packages-select launch_sensor_fusion_slam
       source ~/ros2_ws/install/setup.bash
       ros2 launch launch_sensor_fusion_slam full_system_launch.py
+      ```
 
 Should be ready to go for SLAM while incorporating all the other sensors once all these steps are done
