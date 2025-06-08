@@ -19,7 +19,7 @@ This git repo holds all the files and folders for Subsystem 2 - Sensors and Cont
   - same as fourth test - **launch_sensor_fusion_slam**
 
 ## Final Whole Subsystem Test
-Attempted to use the **rs2-turtlebot/launch_sensor_fusion_slam/launch/full_system_launch.py** file as the executable for running all the different sensors and slam toolbox. Slam toolbox had some bugs in terms of running.
+Attempted to use the **rs2-turtlebot/launch_sensor_fusion_slam/launch/full_system_launch.py** file as the executable for running all the different sensors and slam toolbox.
 ### To run this
 1. First ensure Turtlebot3 is connected to laptop
 3. Setup ros2_ws
