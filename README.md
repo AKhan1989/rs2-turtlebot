@@ -24,7 +24,7 @@ Attempted to use the **rs2-turtlebot/launch_sensor_fusion_slam/launch/full_syste
 1. First ensure Turtlebot3 is connected to laptop
 3. Setup ros2_ws
 4. Git clone repository to device and symlink to the ros2_ws
-5. Run RViz2:
+5. Run RViz2: <br/> <br/>
       Add Image to the Displays panel <br/>
       Open RViz2 with the /camera/image_raw/compressed topic <br/>
       Ensure that under global options that the fixed base is “base_link” <br/>
