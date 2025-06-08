@@ -1,4 +1,4 @@
-# Robotics Studio 2 - Turtlebot Warehouse Project (rs2-turtlebot)
+# Robotics Studio 2 - Turtlebot Warehouse Project <br/> (rs2-turtlebot)
 This git repo holds all the files and folders for Subsystem 2 - Sensors and Control for Localisation and Mapping
 
 ## Unit and Integration Tests this repository holds
